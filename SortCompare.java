@@ -41,7 +41,7 @@ class SortCompare
 		insertionSort(arr);
 		time=System.nanoTime()-time;
 		System.out.println("Insertion Sort : "+time);
-
+		
 		obj.copy(arr);
 		time=System.nanoTime();
 		selectionSort(arr);
