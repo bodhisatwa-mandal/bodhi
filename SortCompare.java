@@ -8,11 +8,11 @@ Sorting algorithms( * means algorithm yet to be implemented):-
 ->Quick Sort
 ->Merge Sort
 ->Comb Sort
+->Shell Sort
 ->Bogo Sort*(lol)
 ->Radix Sort*
 ->Heap Sort*
 ->Bucket Sort*
-->Shell Sort*
 */
 import java.util.*;
 class SortCompare
@@ -81,6 +81,12 @@ class SortCompare
 		quickSort(arr,0,n-1);
 		time=System.nanoTime()-time;
 		System.out.println("Quick Sort     : "+time);
+
+		obj.copy(arr);
+		time=System.nanoTime();
+		shellSort(arr);
+		time=System.nanoTime()-time;
+		System.out.println("Shell Sort     : "+time);
 
 	}
 	void display(int arr[])
@@ -246,6 +252,20 @@ class SortCompare
             int pivot = partition(arr, low, high);
             quickSort(arr, low, pivot-1);
             quickSort(arr, pivot+1, high);
+        }
+    }
+    static void shellSort(int arr[])
+    {
+        int gap,temp,j,i,n = arr.length;
+        for (gap = n/2; gap > 0; gap /= 2)
+        {
+            for (i = gap; i < n; i++)
+            {
+                temp = arr[i];
+                for (j = i; j >= gap && arr[j - gap] > temp; j -= gap)
+                    arr[j] = arr[j - gap];
+                arr[j] = temp;
+            }
         }
     }
 }
