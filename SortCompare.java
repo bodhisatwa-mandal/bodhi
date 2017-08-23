@@ -1,3 +1,19 @@
+/*
+Sorting algorithms( * means algorithm yet to be implemented):-
+->Bubble Sort
+->Selection Sort
+->Insertion Sort
+->Counting Sort
+->Java Inbuilt Sort
+->Quick Sort
+->Merge Sort
+->Comb Sort
+->Bogo Sort*(lol)
+->Radix Sort*
+->Heap Sort*
+->Bucket Sort*
+->Shell Sort*
+*/
 import java.util.*;
 class SortCompare
 {
@@ -53,6 +69,19 @@ class SortCompare
 		mergeSort(arr,0,n-1);
 		time=System.nanoTime()-time;
 		System.out.println("Merge Sort     : "+time);
+
+		obj.copy(arr);
+		time=System.nanoTime();
+		combSort(arr);
+		time=System.nanoTime()-time;
+		System.out.println("Comb Sort      : "+time);
+
+		obj.copy(arr);
+		time=System.nanoTime();
+		quickSort(arr,0,n-1);
+		time=System.nanoTime()-time;
+		System.out.println("Quick Sort     : "+time);
+
 	}
 	void display(int arr[])
 	{
@@ -173,4 +202,50 @@ class SortCompare
 	        merge(arr, l, m, r);
 	    }
 	}
+    static void combSort(int arr[])
+    {
+        int n = arr.length;
+        int gap = (n*10)/13;
+        while (gap>0)
+        {
+            for (int i=0; i<n-gap; i++)
+            {
+                if (arr[i] > arr[i+gap])
+                {
+                    int temp = arr[i];
+                    arr[i] = arr[i+gap];
+                    arr[i+gap] = temp;
+                }
+            }
+            gap = (gap*10)/13;
+        }
+    }
+    static int partition(int arr[], int low, int high)
+    {
+        int pivot = arr[high]; 
+        int i = (low-1);
+        for (int j=low; j<high; j++)
+        {
+            if (arr[j] <= pivot)
+            {
+                i++;
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+        int temp = arr[i+1];
+        arr[i+1] = arr[high];
+        arr[high] = temp;
+        return i+1;
+    }
+    static void quickSort(int arr[], int low, int high)
+    {
+        if (low < high)
+        {
+            int pivot = partition(arr, low, high);
+            quickSort(arr, low, pivot-1);
+            quickSort(arr, pivot+1, high);
+        }
+    }
 }
