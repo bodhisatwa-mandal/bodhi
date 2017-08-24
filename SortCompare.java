@@ -3,12 +3,17 @@ Sorting algorithms( * means algorithm yet to be implemented):-
 ->Bubble Sort
 ->Selection Sort
 ->Insertion Sort
-->Counting Sort
+->Counting Sort 1
+->Counting Sort 2
 ->Java Inbuilt Sort
 ->Quick Sort
 ->Merge Sort
 ->Comb Sort
 ->Shell Sort
+->Shaker/Cocktail/Cocktail Shaker Sort
+->Stooge Sort
+->Bitonic Sort
+->Pancake Sort
 ->Bogo Sort*(lol)
 ->Radix Sort*
 ->Heap Sort*
@@ -38,55 +43,73 @@ class SortCompare
 		time=System.nanoTime();
 		inbuiltSort(arr);
 		time=System.nanoTime()-time;
-		System.out.println("Inbuilt Sort   : "+time);
+		System.out.println("Inbuilt Sort    : "+time);
 
 		obj.copy(arr);
 		time=System.nanoTime();
 		bubbleSort(arr);
 		time=System.nanoTime()-time;
-		System.out.println("Bubble Sort    : "+time);
+		System.out.println("Bubble Sort     : "+time);
 
 		obj.copy(arr);
 		time=System.nanoTime();
-		countingSort(arr);
+		countingSort1(arr);
 		time=System.nanoTime()-time;
-		System.out.println("Counting Sort  : "+time);
+		System.out.println("Counting Sort 1 : "+time);
+
+		obj.copy(arr);
+		time=System.nanoTime();
+		countingSort2(arr);
+		time=System.nanoTime()-time;
+		System.out.println("Counting Sort 2 : "+time);
 
 		obj.copy(arr);
 		time=System.nanoTime();
 		insertionSort(arr);
 		time=System.nanoTime()-time;
-		System.out.println("Insertion Sort : "+time);
+		System.out.println("Insertion Sort  : "+time);
 		
 		obj.copy(arr);
 		time=System.nanoTime();
 		selectionSort(arr);
 		time=System.nanoTime()-time;
-		System.out.println("Selection Sort : "+time);
+		System.out.println("Selection Sort  : "+time);
 
 		obj.copy(arr);
 		time=System.nanoTime();
 		mergeSort(arr,0,n-1);
 		time=System.nanoTime()-time;
-		System.out.println("Merge Sort     : "+time);
+		System.out.println("Merge Sort      : "+time);
 
 		obj.copy(arr);
 		time=System.nanoTime();
 		combSort(arr);
 		time=System.nanoTime()-time;
-		System.out.println("Comb Sort      : "+time);
+		System.out.println("Comb Sort       : "+time);
 
 		obj.copy(arr);
 		time=System.nanoTime();
 		quickSort(arr,0,n-1);
 		time=System.nanoTime()-time;
-		System.out.println("Quick Sort     : "+time);
+		System.out.println("Quick Sort      : "+time);
 
 		obj.copy(arr);
 		time=System.nanoTime();
 		shellSort(arr);
 		time=System.nanoTime()-time;
-		System.out.println("Shell Sort     : "+time);
+		System.out.println("Shell Sort      : "+time);
+
+		obj.copy(arr);
+		time=System.nanoTime();
+		shakerSort(arr);
+		time=System.nanoTime()-time;
+		System.out.println("Shaker Sort     : "+time);
+
+		obj.copy(arr);
+		time=System.nanoTime();
+		stoogeSort(arr,0,n-1);
+		time=System.nanoTime()-time;
+		System.out.println("Stooge Sort     : "+time);
 
 	}
 	void display(int arr[])
@@ -123,7 +146,23 @@ class SortCompare
 					arr[j+1]=temp;
 				}
 	}
-	static void countingSort(int arr[])
+	static void countingSort1(int arr[])
+    {
+        int i,n = arr.length;
+        int output[] = new int[n];
+        int count[] = new int[n];
+        for (i=0; i<n; ++i)
+            count[i] = 0;
+        for (i=0; i<n; ++i)
+            count[arr[i]]++;
+        for (i=1; i<n; ++i)
+            count[i] += count[i-1];
+        for (i = 0; i<n; i++)
+            output[count[arr[i]]-- - 1] = arr[i];
+        for (i = 0; i<n; ++i)
+            arr[i] = output[i];
+    }
+	static void countingSort2(int arr[])
 	{
 		int i,j,k=0,n=arr.length,temp[]=new int[n];
 		for(i=0;i<n;i++)
@@ -266,6 +305,46 @@ class SortCompare
                     arr[j] = arr[j - gap];
                 arr[j] = temp;
             }
+        }
+    }
+    static void shakerSort(int arr[])
+    {
+    	int i,j,temp,n=arr.length;
+    	for (i = 0; i < n/2; i++)
+    	{
+	        for (j = i; j < n - i - 1; j++)
+		        if (arr[j] > arr[j+1])
+    	        {
+    	            temp = arr[j];
+	                arr[j] = arr[j+1];
+	                arr[j+1] = temp;
+	            }
+	        for (j = n - 2 - i; j > i; j--)
+	            if (arr[j] < arr[j-1])
+	            {
+	                temp = arr[j];
+	                arr[j] = arr[j-1];
+	                arr[j-1] = temp;
+	            }
+	    }
+    }
+    static void stoogeSort(int arr[], int l, int h)
+    {
+        if (l >= h)
+           return;
+       int t;
+        if (arr[l]>arr[h])
+        {
+            t = arr[l];
+            arr[l] = arr[h];
+            arr[h] = t;
+        }
+        if (h-l+1 > 2)
+        {
+            t = (h-l+1)/3;
+            stoogeSort(arr, l, h-t);
+            stoogeSort(arr, l+t, h);
+            stoogeSort(arr, l, h-t);
         }
     }
 }
