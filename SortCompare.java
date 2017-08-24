@@ -12,8 +12,8 @@ Sorting algorithms( * means algorithm yet to be implemented):-
 ->Shell Sort
 ->Shaker/Cocktail/Cocktail Shaker Sort
 ->Stooge Sort
+->Pancake Sort
 ->Bitonic Sort*
-->Pancake Sort*
 ->Bogo Sort*(lol)
 ->Radix Sort*
 ->Heap Sort*
