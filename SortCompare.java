@@ -13,13 +13,20 @@ Sorting algorithms( * means algorithm yet to be implemented):-
 ->Shaker/Cocktail/Cocktail Shaker Sort
 ->Stooge Sort
 ->Pancake Sort
+->Bucket Sort
 ->Bitonic Sort*
+->Tim Sort*
 ->Bogo Sort*(lol)
 ->Radix Sort*
 ->Heap Sort*
-->Bucket Sort*
+->Cycle Sort*
 */
 import java.util.*;
+class List
+{
+	int data;
+	List next;
+}
 class SortCompare
 {
 	int n;
@@ -117,12 +124,24 @@ class SortCompare
 		time=System.nanoTime()-time;
 		System.out.println("Pancake Sort    : "+time);
 
+		obj.copy(arr);
+		time=System.nanoTime();
+		bucketSort(arr);
+		time=System.nanoTime()-time;
+		System.out.println("Bucket Sort     : "+time);
 	}
 	void display(int arr[])
 	{
 		int i;
 		for(i=0;i<n;i++)
 			System.out.println("*"+arr[i]);
+	}
+	void initialize(int i)
+	{
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter numbers");
+		for(i=0;i<arr.length;i++)
+			arr[i]=sc.nextInt();
 	}
 	void initialize()
 	{
@@ -157,11 +176,11 @@ class SortCompare
         int i,n = arr.length;
         int output[] = new int[n];
         int count[] = new int[n];
-        for (i=0; i<n; ++i)
+        for (i=0; i<n; i++)
             count[i] = 0;
-        for (i=0; i<n; ++i)
+        for (i=0; i<n; i++)
             count[arr[i]]++;
-        for (i=1; i<n; ++i)
+        for (i=1; i<n; i++)
             count[i] += count[i-1];
         for (i = 0; i<n; i++)
             output[count[arr[i]]-- - 1] = arr[i];
@@ -175,8 +194,7 @@ class SortCompare
 			for(j=0;j<n;j++)
 				if(arr[j]==i)
 					temp[k++]=i;
-		for(i=0;i<n;i++)
-			arr[i]=temp[i];
+		arr=temp;
 	}
 	static void insertionSort(int arr[])
 	{
@@ -380,5 +398,36 @@ class SortCompare
             start++;
             i--;
         }
+    }
+    static void bucketSort(int arr[])
+    {
+    	int i,temp,n=arr.length,k=0;
+    	List bucket[]=new List[n];
+    	for(i=0;i<n;i++)
+    	{
+    		temp=(int)Math.floor(arr[i]*10/n);
+    		addBucket(bucket,temp,arr[i]);
+    	}
+    	for(i=0;i<n;i++)
+    		while(bucket[i]!=null)
+    		{
+    			arr[k++]=bucket[i].data;
+    			bucket[i]=bucket[i].next;
+    		}
+    }
+    static void addBucket(List bucket[],int index,int item)
+    {
+    	List tempList=new List();
+    	tempList.data=item;
+    	if(bucket[index]==null)
+    	{
+    		bucket[index]=tempList;
+    		return;
+    	}
+    	List temp=bucket[index];
+    	while(temp.next!=null&&temp.next.data<tempList.data)
+    		temp=temp.next;
+    	tempList.next=temp.next;
+    	temp.next=tempList;
     }
 }
