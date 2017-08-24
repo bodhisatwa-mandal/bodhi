@@ -12,8 +12,8 @@ Sorting algorithms( * means algorithm yet to be implemented):-
 ->Shell Sort
 ->Shaker/Cocktail/Cocktail Shaker Sort
 ->Stooge Sort
-->Bitonic Sort
-->Pancake Sort
+->Bitonic Sort*
+->Pancake Sort*
 ->Bogo Sort*(lol)
 ->Radix Sort*
 ->Heap Sort*
@@ -110,6 +110,12 @@ class SortCompare
 		stoogeSort(arr,0,n-1);
 		time=System.nanoTime()-time;
 		System.out.println("Stooge Sort     : "+time);
+
+		obj.copy(arr);
+		time=System.nanoTime();
+		pancakeSort(arr);
+		time=System.nanoTime()-time;
+		System.out.println("Pancake Sort    : "+time);
 
 	}
 	void display(int arr[])
@@ -345,6 +351,34 @@ class SortCompare
             stoogeSort(arr, l, h-t);
             stoogeSort(arr, l+t, h);
             stoogeSort(arr, l, h-t);
+        }
+    }
+    static void pancakeSort(int arr[])
+    {
+        int n=arr.length,i,j,max;
+        for (i = n; i > 1; i--)
+        {
+        	max=0;
+        	for (j = 1; j < i; j++)
+            	if (arr[j] > arr[max])
+            	    max = j;
+            if (max != i-1)
+            {
+                flip(arr, max);
+                flip(arr, i-1);
+            }
+        }
+    }
+    static void flip(int arr[], int i)
+    {
+        int temp, start = 0;
+        while (start < i)
+        {
+            temp = arr[start];
+            arr[start] = arr[i];
+            arr[i] = temp;
+            start++;
+            i--;
         }
     }
 }
