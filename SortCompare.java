@@ -5,7 +5,7 @@ Sorting algorithms( * means algorithm yet to be implemented):-
 ->Selection Sort
 ->Insertion Sort
 ->Counting Sort
-->Unknown Sort 1
+->Munda Sort
 ->Quick Sort
 ->Merge Sort
 ->Comb Sort
@@ -14,7 +14,7 @@ Sorting algorithms( * means algorithm yet to be implemented):-
 ->Stooge Sort
 ->Pancake Sort
 ->Bucket Sort
-->Unknown Sort 2
+->CM Sort
 ->Radix Sort
 ->Bitonic Sort*
 ->Tim Sort*
@@ -45,8 +45,9 @@ class SortCompare
 		int arr[]=new int[n];
 		long time;
 		SortCompare obj=new SortCompare(n);
+		System.out.println("Enter range");
+		obj.arr[0]=sc.nextInt();
 		obj.initialize();
-		
 		obj.copy(arr);
 		time=System.nanoTime();
 		inbuiltSort(arr);
@@ -67,9 +68,9 @@ class SortCompare
 
 		obj.copy(arr);
 		time=System.nanoTime();
-		unknownSort1(arr);
+		mundaSort(arr);
 		time=System.nanoTime()-time;
-		System.out.println("Unknown Sort  1 : "+time);
+		System.out.println("Munda Sort      : "+time);
 
 		obj.copy(arr);
 		time=System.nanoTime();
@@ -133,9 +134,9 @@ class SortCompare
 
 		obj.copy(arr);
 		time=System.nanoTime();
-		unknownSort2(arr);
+		cmSort(arr);
 		time=System.nanoTime()-time;
-		System.out.println("Unknown Sort 2  : "+time);
+		System.out.println("CM Sort         : "+time);
 
 		obj.copy(arr);
 		time=System.nanoTime();
@@ -158,9 +159,10 @@ class SortCompare
 	}
 	void initialize()
 	{
-		int i;
+		int i,range=this.arr[0];
+		System.out.println("#"+range);
 		for(i=0;i<n;i++)
-			arr[i]=(int)(Math.random()*n);
+			arr[i]=(int)(Math.random()*range);
 	}
 	void copy(int arr[])
 	{
@@ -186,21 +188,24 @@ class SortCompare
 	}
 	static void countingSort1(int arr[])
     {
-        int i,n = arr.length;
+        int i,n = arr.length,max=-1;
         int output[] = new int[n];
-        int count[] = new int[n];
+        for(i=0;i<n;i++)
+        	if(max<arr[i])
+        		max=arr[i];
+        int count[] = new int[max+1];
         for (i=0; i<n; i++)
             count[i] = 0;
         for (i=0; i<n; i++)
             count[arr[i]]++;
-        for (i=1; i<n; i++)
+        for (i=1; i<=max; i++)
             count[i] += count[i-1];
         for (i = 0; i<n; i++)
             output[count[arr[i]]-- - 1] = arr[i];
         for (i = 0; i<n; ++i)
             arr[i] = output[i];
     }
-	static void unknownSort1(int arr[])
+	static void mundaSort(int arr[])
 	{
 		int i,j,k=0,n=arr.length,temp[]=new int[n];
 		for(i=0;i<n;i++)
@@ -414,14 +419,23 @@ class SortCompare
     }
     static void bucketSort(int arr[])
     {
-    	int i,temp,n=arr.length,k=0;
-    	List bucket[]=new List[n];
+    	int i,temp,n=arr.length,k=0,max=-1,p=1;
+    	List bucket[]=new List[10];
     	for(i=0;i<n;i++)
+    		if(max<arr[i])
+    			max=arr[i];
+    	max/=10;
+    	while(max!=0)
     	{
-    		temp=(int)Math.floor(arr[i]*10/n);
-    		addBucket(bucket,temp,arr[i]);
+    		p*=10;
+    		max/=10;
     	}
     	for(i=0;i<n;i++)
+    	{
+    		temp=(int)Math.floor(arr[i]/p);
+    		addBucket(bucket,temp,arr[i]);
+    	}
+    	for(i=0;i<10;i++)
     		while(bucket[i]!=null)
     		{
     			arr[k++]=bucket[i].data;
@@ -443,12 +457,16 @@ class SortCompare
     	tempList.next=temp.next;
     	temp.next=tempList;
     }
-    static void unknownSort2(int arr[])
+    static void cmSort(int arr[])
     {
-    	int n=arr.length,count[]=new int[n],i,j=0;
+    	int n=arr.length,max=-1,i,j=0;
+    	for(i=0;i<n;i++)
+    		if(arr[i]>max)
+    			max=arr[i];
+    	int count[]=new int[max+1];
     	for(i=0;i<n;i++)
     		count[arr[i]]++;
-    	for(i=0;i<n;i++)
+    	for(i=0;i<=max;i++)
     		while(count[i]--!=0)
     			arr[j++]=i;
     }
