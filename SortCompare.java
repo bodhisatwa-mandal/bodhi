@@ -1,23 +1,24 @@
 /*
 Sorting algorithms( * means algorithm yet to be implemented):-
+->Arrays.sort() in java.util package
 ->Bubble Sort
 ->Selection Sort
 ->Insertion Sort
-->Counting Sort 1
-->Counting Sort 2
-->Java Inbuilt Sort
+->Counting Sort
+->Unknown Sort 1
 ->Quick Sort
 ->Merge Sort
 ->Comb Sort
 ->Shell Sort
-->Shaker/Cocktail/Cocktail Shaker Sort
+->Shaker/Ripple/Shuffle/Shuttle/Bidirectional Bubble/Cocktail/Cocktail Shaker Sort
 ->Stooge Sort
 ->Pancake Sort
 ->Bucket Sort
+->Unknown Sort 2
+->Radix Sort
 ->Bitonic Sort*
 ->Tim Sort*
 ->Bogo Sort*(lol)
-->Radix Sort*
 ->Heap Sort*
 ->Cycle Sort*
 */
@@ -62,13 +63,13 @@ class SortCompare
 		time=System.nanoTime();
 		countingSort1(arr);
 		time=System.nanoTime()-time;
-		System.out.println("Counting Sort 1 : "+time);
+		System.out.println("Counting Sort   : "+time);
 
 		obj.copy(arr);
 		time=System.nanoTime();
-		countingSort2(arr);
+		unknownSort1(arr);
 		time=System.nanoTime()-time;
-		System.out.println("Counting Sort 2 : "+time);
+		System.out.println("Unknown Sort  1 : "+time);
 
 		obj.copy(arr);
 		time=System.nanoTime();
@@ -129,6 +130,18 @@ class SortCompare
 		bucketSort(arr);
 		time=System.nanoTime()-time;
 		System.out.println("Bucket Sort     : "+time);
+
+		obj.copy(arr);
+		time=System.nanoTime();
+		unknownSort2(arr);
+		time=System.nanoTime()-time;
+		System.out.println("Unknown Sort 2  : "+time);
+
+		obj.copy(arr);
+		time=System.nanoTime();
+		radixSort(arr);
+		time=System.nanoTime()-time;
+		System.out.println("Radix Sort      : "+time);
 	}
 	void display(int arr[])
 	{
@@ -187,7 +200,7 @@ class SortCompare
         for (i = 0; i<n; ++i)
             arr[i] = output[i];
     }
-	static void countingSort2(int arr[])
+	static void unknownSort1(int arr[])
 	{
 		int i,j,k=0,n=arr.length,temp[]=new int[n];
 		for(i=0;i<n;i++)
@@ -429,5 +442,40 @@ class SortCompare
     		temp=temp.next;
     	tempList.next=temp.next;
     	temp.next=tempList;
+    }
+    static void unknownSort2(int arr[])
+    {
+    	int n=arr.length,count[]=new int[n],i,j=0;
+    	for(i=0;i<n;i++)
+    		count[arr[i]]++;
+    	for(i=0;i<n;i++)
+    		while(count[i]--!=0)
+    			arr[j++]=i;
+    }
+    static void radixSort(int arr[])
+    {
+    	int n=arr.length,temp[][]=new int[10][n+1],i,max=arr[0],pow=1,j,index,k;
+    	for(i=1;i<n;i++)
+    		if(arr[i]>max)
+    			max=arr[i];
+    	while(max!=0)
+    	{
+    		max/=10;
+    		pow*=10;
+    	}
+    	for(i=10;i<=pow;i*=10)
+    	{
+    		for(j=0;j<10;j++)
+    			temp[j][0]=0;
+    		for(j=0;j<n;j++)
+    		{
+    			index=(arr[j]%i)*10/i;
+    			temp[index][++temp[index][0]]=arr[j];
+    		}
+    		max=0;
+    		for(j=0;j<10;j++)
+    			for(k=1;k<=temp[j][0];k++)
+    				arr[max++]=temp[j][k];
+    	}
     }
 }
