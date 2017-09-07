@@ -160,7 +160,6 @@ class SortCompare
 	void initialize()
 	{
 		int i,range=this.arr[0];
-		System.out.println("#"+range);
 		for(i=0;i<n;i++)
 			arr[i]=(int)(Math.random()*range);
 	}
