@@ -59,7 +59,7 @@ void gaussJordan(int n,float original[n][n],float inverse[n][n])
 				inverse[j][k]-=temp*inverse[i][k];
 			}
 		}
-		if(i!=n)
+		if(i!=n-1)
 			printDual(n,original,inverse);
 		for(j=i-1;j>=0;j--)
 		{
