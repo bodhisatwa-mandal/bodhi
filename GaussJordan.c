@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+int iteration=1;
 void initialize(int n,float original[n][n],float copy[n][n],float inverse[n][n]);
 void gaussJordan(int n,float original[n][n],float inverse[n][n]);
 void multiply(int n,float copy[n][n],float inverse[n][n],float multiplied[n][n]);
@@ -8,7 +9,7 @@ void printSingle(int n,float arr[n][n]);
 int main()
 {
 	int n,p,q;
-	printf("Enter dimension:");
+	printf("Enter dimension\t:\t");
 	scanf("%d",&n);
 	float copy[n][n],original[n][n],inverse[n][n],multiplied[n][n];
 	initialize(n,original,copy,inverse);
@@ -76,7 +77,7 @@ void gaussJordan(int n,float original[n][n],float inverse[n][n])
 void initialize(int n,float original[n][n],float copy[n][n],float inverse[n][n])
 {
 	int i,j;
-	printf("Enter elements:-\n");
+	printf("Enter elements\t:-\n");
 	for(i=0;i<n;i++)
 		for(j=0;j<n;j++)
 		{
@@ -90,6 +91,7 @@ void initialize(int n,float original[n][n],float copy[n][n],float inverse[n][n])
 }
 void printDual(int n,float original[n][n],float inverse[n][n])
 {
+	printf("\n\nStep\t:\t%d",iteration++);
 	int p,q;
 	printf("\n");
 	printf("---");
