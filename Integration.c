@@ -25,7 +25,7 @@ void input(float* a,float* b,float* max_error)
 }
 float f(float x)
 {
-	return x*x*x;
+	return 1/(1+x);
 }
 float trapezoidal(float a,float b,float max_error)
 {
