@@ -25,12 +25,12 @@ void input(float* a,float* b,float* max_error)
 }
 float f(float x)
 {
-	return x*x;
+	return x*x*x;
 }
 float trapezoidal(float a,float b,float max_error)
 {
 	int iterations=1;
-	float x,width=b-a,fixed_term=(fabs(f(b))+fabs(f(a)))/2,sum0,sum1,error;
+	float x,width=b-a,fixed_term=(f(b)+f(a))/2,sum0,sum1,error;
 	sum1=fixed_term*width;
 	for(x=0;x<105;x++)
 		printf("-");
@@ -46,7 +46,7 @@ float trapezoidal(float a,float b,float max_error)
 		sum1=0;
 		width/=2;
 		for(x=a+width;x<b;x+=width)
-			sum1+=fabs(f(x));
+			sum1+=f(x);
 		sum1+=fixed_term;
 		sum1*=width;
 		error=fabs(sum1-sum0);
@@ -61,7 +61,7 @@ float simpson(float a,float b,float max_error)
 {
 	int iterations=1;
 	float x,width=b-a,sum0,sum1,error;
-	sum1=(width/6)*(fabs(f(a))+4*fabs(f((a+b)/2))+fabs(b));
+	sum1=(width/6)*(f(a)+4*f((a+b)/2)+f(b));
 	for(x=0;x<105;x++)
 		printf("-");
 	printf("\n");
@@ -76,7 +76,7 @@ float simpson(float a,float b,float max_error)
 		sum1=0;
 		width/=2;
 		for(x=a;x<=b-width;x+=width)
-			sum1+=(width/6)*(fabs(f(x))+4*fabs(f(x+width/2))+fabs(f(x+width)));
+			sum1+=(width/6)*(f(x)+4*f(x+width/2)+f(x+width));
 		error=fabs(sum1-sum0);
 		printf("|\t%d\t||\t%ld\t|\t%f\t|\t%f\t|\t%f\t|\n",iterations++,(long)((b-a)/width),sum0,sum1,error);
 	}while(error>max_error);
