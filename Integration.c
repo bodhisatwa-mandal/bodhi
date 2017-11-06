@@ -50,7 +50,6 @@ float Trapezoidal(float a,float b,float max_error)
 		sum0=sum1;
 		sum1=0;
 		width/=2;
-		//width=dist/(iterations+1);
 		for(x=a;x<=b-width;x+=width)
 			sum1+=(f(x)+f(x+width))*width/2;
 		error=fabs(sum1-sum0);
