@@ -52,8 +52,7 @@ float Trapezoidal(float a,float b,float max_error)
 		width/=2;
 		//width=dist/(iterations+1);
 		for(x=a;x<=b-width;x+=width)
-			sum1+=f(x)+f(x+width);
-		sum1=sum1*width/2;
+			sum1+=(f(x)+f(x+width))*width/2;
 		error=fabs(sum1-sum0);
 		printf("|\t%d\t||\t%ld\t|\t%f\t|\t%f\t|\t%f\t|\n",iterations++,(long)((b-a)/width),sum0,sum1,error);
 	}while(error>max_error);
@@ -83,8 +82,7 @@ float Simpson1_3(float a,float b,float max_error)
 		width/=2;
 		//width=dist/(iterations+1);
 		for(x=a;x<=b-width;x+=width)
-			sum1+=f(x)+4*f(x+(width/2))+f(x+width);
-		sum1=sum1*width/6;
+			sum1+=(f(x)+4*f(x+(width/2))+f(x+width))*width/6;
 		error=fabs(sum1-sum0);
 		printf("|\t%d\t||\t%ld\t|\t%f\t|\t%f\t|\t%f\t|\n",iterations++,(long)((b-a)/width),sum0,sum1,error);
 	}while(error>max_error);
@@ -113,9 +111,8 @@ float Simpson3_8(float a,float b,float max_error)
 		sum1=0;
 		width/=2;
 		//width=dist/(iterations+1);
-		for(x=a+width;x<b;x+=width)
-			sum1+=f(x)+3*f(x+(width/3))+3*f(x+(2*width/3))+f(x+width);
-		sum1=sum1*width/8;
+		for(x=a;x<=b-width;x+=width)
+			sum1+=(f(x)+3*f(x+(width/3))+3*f(x+(2*width/3))+f(x+width))*width/8;
 		error=fabs(sum1-sum0);
 		printf("|\t%d\t||\t%ld\t|\t%f\t|\t%f\t|\t%f\t|\n",iterations++,(long)((b-a)/width),sum0,sum1,error);
 	}while(error>max_error);
