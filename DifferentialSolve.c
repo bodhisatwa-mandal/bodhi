@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <math.h>
+
 float df(float x,float y);
 float f(float x);
 void input(float* x0,float* y0,float* h,float* xn);
@@ -40,11 +41,11 @@ void initializeArray(float x0,float y0,float h,int n,float arr[n][4])
 }
 float df(float x,float y)
 {
-	return 2*x;
+	return y-x;
 }
 float f(float x)
 {
-	return x*x;
+	return x+1-0.5*exp(x);
 }
 void display(int n,float arr[n][4])
 {
